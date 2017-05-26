@@ -1,0 +1,25 @@
+body {
+	background-color: lightblue;
+}
+
+table {
+	background-color: white;
+}
+
+img {
+	height: 25rem;
+	width: 25rem;
+}	
+
+textarea {
+	margin-bottom: 20px;
+}
+
+.devour {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.row {
+	margin-bottom: 1rem;
+}
