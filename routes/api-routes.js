@@ -14,10 +14,25 @@ module.exports = function(app) {
 	});
 	//POST route for saving a new burger
 	app.post("/api/burgers", function(req, res) {
-
+		//we are adding a new object to our table, in this case only burger_name
+		db.Burger.create({
+			burger_name: req.body.burger_name
+		}).then(function(dbBurger) {
+			res.json(dbBurger);
+		});
 	});
 	//PUT route for updating burgers (get data from req.body)
 	app.put("/api/burgers", function(req, res) {
-
+		//we take in an object describing the properties we want to update
+		db.Burger.update({
+			burger_name: req.body.burger_name,
+			devoured: true
+		}, {
+			where: {
+				id: req.body.id
+			}
+		}).then(function(dbBurger) {
+			res.json(dbBurger);
+		});
 	});
 };
