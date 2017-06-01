@@ -8,11 +8,6 @@ var router = express.Router();
 // import db models to use database and display html
 var db = require("../models");
 
-//create all my routes and set up logic within those routes where required
-// router.get("/", function (req, res) {
-// 	res.redirect('/burgers');
-// });
-
 router.get("/", function (req, res) {
         //return all entries from burger table
         db.Burger.findAll({}).then(function(dbBurger) {
@@ -45,14 +40,6 @@ router.put("/:id", function (req, res) {
             res.redirect("/");
         });
 });
-
-// router.delete("/:id", function (req, res) {
-// 	var condition = "id= " + req.params.id;
-
-// 	burger.delete(condition, function() {
-// 		res.redirect("/");
-// 	});
-// });
 
 //export routes for server.js to use.
 module.exports = router;
