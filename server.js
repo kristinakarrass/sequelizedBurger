@@ -3,15 +3,17 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var exphbs = require("express-handlebars");
+var path = require("path");
+// import routes and give the server access to them
+var routes = require("./controllers/burgers_controller.js");
+//require models for syncing
+var db = require("./models");
 
 var PORT = process.env.PORT || 3000;
 var app = express();
 
-//require models for syncing
-var db = require("./models");
-
 //Serve static conent for the app from the "public" directory in the application directory
-app.use(express.static(process.cwd() + "/public"));
+app.use(express.static(path.join(__dirname + "/public")));
 
 //Parse application
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,8 +25,7 @@ app.use(methodOverride("_method"));
 app.engine("handlebars", exphbs({ defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
-// import routes and give the server access to them
-var routes = require("./controllers/burgers_controller.js");
+
 
 app.use("/", routes);
 
