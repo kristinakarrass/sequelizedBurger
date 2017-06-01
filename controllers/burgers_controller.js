@@ -4,6 +4,7 @@ var router = express.Router();
 
 // import the model (burger.js) to use its database functions
 // var burger = require("../models/burger.js");
+
 // import db models to use database and display html
 var db = require("../models");
 
@@ -16,7 +17,10 @@ router.get("/", function (req, res) {
         //return all entries from burger table
         db.Burger.findAll({}).then(function(dbBurger) {
             //all burgers can be accessed as an argument in the callback function
-            res.json(dbBurger);
+            var burgerObject = {
+                burgers: dbBurger
+            }
+            res.render("index", burgerObject);
         });
 });
 
@@ -25,21 +29,20 @@ router.post("/", function (req, res) {
         db.Burger.create({
             burger_name: req.body.burger_name
         }).then(function(dbBurger) {
-            res.json(dbBurger);
+            res.redirect("/");
         });
 });
 
 router.put("/:id", function (req, res) {
         //we take in an object describing the properties we want to update
         db.Burger.update({
-            burger_name: req.body.burger_name,
             devoured: true
         }, {
             where: {
-                id: req.body.id
+                id: req.params.id
             }
         }).then(function(dbBurger) {
-            res.json(dbBurger);
+            res.redirect("/");
         });
 });
 
