@@ -11,44 +11,43 @@ var burger = require("../models/burger.js");
 // });
 
 router.get("/", function (req, res) {
-    burger.all(function(data) {
-        var burgObject = {
-          burgers: data
-        };
-        console.log(burgObject);
-        res.render("index", burgObject);
-    });
+        //return all entries from burger table
+        db.Burger.findAll({}).then(function(dbBurger) {
+            //all burgers can be accessed as an argument in the callback function
+            res.json(dbBurger);
+        });
 });
 
 router.post("/", function (req, res) {
-    console.log(req.body);
-    burger.create([
-        "burger_name"
-    ], [
-        req.body.burger_name
-    ], function() {
-        res.redirect("/");
-    });
+        //we are adding a new object to our table, in this case only burger_name
+        db.Burger.create({
+            burger_name: req.body.burger_name
+        }).then(function(dbBurger) {
+            res.json(dbBurger);
+        });
 });
 
 router.put("/:id", function (req, res) {
-    var condition = "id = " + req.params.id;
-    console.log("condition", condition);
-
-    burger.update({
-      devoured: true
-    }, condition, function() {
-      res.redirect("/");
-    });
+        //we take in an object describing the properties we want to update
+        db.Burger.update({
+            burger_name: req.body.burger_name,
+            devoured: true
+        }, {
+            where: {
+                id: req.body.id
+            }
+        }).then(function(dbBurger) {
+            res.json(dbBurger);
+        });
 });
 
-router.delete("/:id", function (req, res) {
-	var condition = "id= " + req.params.id;
+// router.delete("/:id", function (req, res) {
+// 	var condition = "id= " + req.params.id;
 
-	burger.delete(condition, function() {
-		res.redirect("/");
-	});
-});
+// 	burger.delete(condition, function() {
+// 		res.redirect("/");
+// 	});
+// });
 
 //export routes for server.js to use.
 module.exports = router;

@@ -24,12 +24,12 @@ app.engine("handlebars", exphbs({ defaultLayout: "main"}));
 app.set("view engine", "handlebars");
 
 // import routes and give the server access to them
-// var routes = require("./controllers/burgers_controller.js");
+var routes = require("./controllers/burgers_controller.js");
 
-// app.use("/", routes);
+app.use("/", routes);
 
-require("./routes/html-routes.js");
-require("./routes/api-routes.js");
+// require("./routes/html-routes.js");
+// require("./routes/api-routes.js");
 
 db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
